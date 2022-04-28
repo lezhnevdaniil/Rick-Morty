@@ -1,42 +1,25 @@
 import React from "react";
+import { filterList, list } from "./FilterParams";
 import "./Filter.scss";
 
-function Filter() {
+function Filter({ changeFilter }) {
   return (
     <form>
       <div className="filter">
-        <div>
-          <label>Status</label>
-          <select name="Status">
-            <option>Vasya</option>
-            <option>Vasyaaa</option>
-            <option>Vasya111</option>
-          </select>
-        </div>
-        <div>
-          <label>Species</label>
-          <select name="Species">
-            <option>Vasya</option>
-            <option>Vasyaaa</option>
-            <option>Vasya111</option>
-          </select>
-        </div>
-        <div>
-          <label>Gender</label>
-          <select name="Gender">
-            <option>Vasya</option>
-            <option>Vasyaaa</option>
-            <option>Vasya111</option>
-          </select>
-        </div>
-        <div>
-          <label>Type</label>
-          <select name="Type">
-            <option>Vasya</option>
-            <option>Vasyaaa</option>
-            <option>Vasya111</option>
-          </select>
-        </div>
+        {list.map((typeDetails) => (
+          <div key={typeDetails}>
+            <label>{typeDetails}</label>
+            <select
+              name={typeDetails}
+              onChange={(e) => changeFilter(typeDetails, e.target.value)}
+            >
+              <option>Without a filter</option>
+              {filterList[typeDetails].map((type) => (
+                <option key={type}>{type}</option>
+              ))}
+            </select>
+          </div>
+        ))}
       </div>
     </form>
   );

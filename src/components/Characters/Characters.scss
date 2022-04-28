@@ -8,11 +8,12 @@
   height: 76vh;
   letter-spacing: 3px;
   font-size: 55px;
+  text-align: center;
 }
 
 .loading {
   width: 90vw;
-  height: 100vh;
+  height: 70vh;
   background-color: rgb(25, 31, 38);
   display: flex;
   justify-content: space-around;
@@ -31,6 +32,9 @@
   align-items: center;
   margin: 10px 0;
 
+  * {
+    margin: 0;
+  }
   p {
     width: 50px;
     text-align: center;
@@ -59,21 +63,23 @@
       height: auto;
       text-align: center;
 
-      p {
+      p + span {
         margin: 10px 0 0 0;
       }
 
       .episodeMini {
         width: auto;
-        height: 55px;
+        height: auto;
+        padding-bottom: 15px;
       }
       .episode {
         width: 270px;
-        height: fit-content;
         overflow: auto;
         margin-top: 10px;
         background-color: rgba(255, 255, 255, 0.1411764706);
         max-height: 74px;
+        height: fit-content;
+        border-radius: 4px;
       }
     }
 
