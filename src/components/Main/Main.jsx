@@ -10,39 +10,40 @@ import Modal from "../Modal/Modal";
 import "./Main.scss";
 
 function Main() {
-  const [filterObj, setFilterObj] = useState({});
   const [activeInformation, setActiveInformation] = useState(false);
   const [character, setCharacter] = useState({});
-
+  const [searchParams, setSearchParams] = useSearchParams();
   const page = useParams().page;
   const navigate = useNavigate();
-  const [sercParams, setSercParams] = useSearchParams();
+  const [filterObj, setFilterObj] = useState(searchParams);
 
   useEffect(() => {
-    setSercParams(filterObj);
+    setSearchParams(filterObj);
   }, [filterObj]);
 
   const changeFilter = (typeDetails, types) => {
     if (types !== "Without a filter") {
       setFilterObj((obj) => ({ ...obj, [typeDetails]: types }));
-      navigate(`/main/${1}`);
+      navigate(`/main/1`);
     } else {
       let newFilter = JSON.parse(JSON.stringify(filterObj));
       delete newFilter[typeDetails];
       setFilterObj(newFilter);
+      navigate(`/main/1`);
     }
   };
 
   const filterGet = () => {
-    if (Object.keys(filterObj).length) {
-      const keys = Object.keys(filterObj);
-      const filter = [];
-      let str = "";
-      keys.forEach((key) => {
-        filter.push(`{${key} : "${filterObj[key]}"}`);
-        str = str + `${key} : "${filterObj[key]}"`;
+    if (searchParams.toString()) {
+      const arr = [];
+      for (const [key, value] of searchParams) {
+        arr.push(`${key}:"${value}"`);
+      }
+      let strArr = "";
+      arr.forEach((key) => {
+        strArr = strArr + key;
       });
-      return `, filter: {${str}}`;
+      return `, filter: {${strArr}}`;
     } else {
       return "";
     }
@@ -74,12 +75,24 @@ function Main() {
       }
     }
   `;
-
+  let paginationLink = window.location.href.split("main/");
   const incPage = () => {
-    if (page < data.characters.info.pages) navigate(`/main/${+page + 1}`);
+    let newArr = paginationLink[1].split("?");
+    newArr[0] = String(Number(newArr[0]) + 1);
+    const res = "/main/" + newArr.join("?");
+    if (page < data.characters.info.pages) navigate(res);
   };
   const decrPage = () => {
-    if (page > 1) navigate(`/main/${page - 1}`);
+    let newArr = paginationLink[1].split("?");
+    newArr[0] = String(Number(newArr[0]) - 1);
+    const res = "/main/" + newArr.join("?");
+    if (page > 1) navigate(res);
+  };
+  const goPage = (newPage) => {
+    let newArr = paginationLink[1].split("?");
+    newArr[0] = String(newPage);
+    const res = "/main/" + newArr.join("?");
+    navigate(res);
   };
 
   const { loading, error, data } = useQuery(GET_CHARACTERS);
@@ -91,10 +104,10 @@ function Main() {
       {data && (
         <div className="pagination">
           <img src={leftArrow} onClick={decrPage} alt="ups"></img>
-          {page > 2 && <p onClick={() => navigate(`/main/${1}`)}>1</p>}
+          {page > 2 && <p onClick={() => goPage(1)}>1</p>}
           {page > 3 && "..."}
           {page > 1 && (
-            <p onClick={() => navigate(`/main/${data.characters.info.prev}`)}>
+            <p onClick={() => goPage(data.characters.info.prev)}>
               {data.characters.info.prev}
             </p>
           )}
@@ -102,13 +115,13 @@ function Main() {
             <p>{page}</p>
           </div>
           {page < data.characters.info.pages && (
-            <p onClick={() => navigate(`/main/${data.characters.info.next}`)}>
+            <p onClick={() => goPage(data.characters.info.next)}>
               {data.characters.info.next}
             </p>
           )}
           {page < data.characters.info.pages - 2 && "..."}
           {page < data.characters.info.pages - 1 && (
-            <p onClick={() => navigate(`/main/${data.characters.info.pages}`)}>
+            <p onClick={() => goPage(data.characters.info.pages)}>
               {data.characters.info.pages}
             </p>
           )}

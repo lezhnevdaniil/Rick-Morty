@@ -1,8 +1,10 @@
 import React from "react";
 import { filterList, list } from "./FilterParams";
 import "./Filter.scss";
+import { useSearchParams } from "react-router-dom";
 
 function Filter({ changeFilter }) {
+  const [optionParam] = useSearchParams();
   return (
     <form>
       <div className="filter">
@@ -12,6 +14,7 @@ function Filter({ changeFilter }) {
             <select
               name={typeDetails}
               onChange={(e) => changeFilter(typeDetails, e.target.value)}
+              value={optionParam.get(typeDetails)}
             >
               <option>Without a filter</option>
               {filterList[typeDetails].map((type) => (
