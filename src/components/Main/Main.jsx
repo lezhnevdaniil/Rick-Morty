@@ -4,6 +4,7 @@ import { gql, useQuery } from "@apollo/client";
 import Characters from "../Characters/Characters";
 import Header from "../Header/Header";
 import Filter from "../Filter/Filter";
+import { getCharacters } from "../../service/characters.service";
 import leftArrow from "../../picture/leftArrow.svg";
 import rightArrow from "../../picture/rightArrow.svg";
 import Modal from "../Modal/Modal";
@@ -21,61 +22,8 @@ function Main() {
     setSearchParams(filterObj);
   }, [filterObj]);
 
-  const changeFilter = (typeDetails, types) => {
-    if (types !== "Without a filter") {
-      setFilterObj((obj) => ({ ...obj, [typeDetails]: types }));
-      navigate(`/main/1`);
-    } else {
-      let newFilter = JSON.parse(JSON.stringify(filterObj));
-      delete newFilter[typeDetails];
-      setFilterObj(newFilter);
-      navigate(`/main/1`);
-    }
-  };
+  const allCharacters = getCharacters(gql, page, searchParams);
 
-  const filterGet = () => {
-    if (searchParams.toString()) {
-      const arr = [];
-      for (const [key, value] of searchParams) {
-        arr.push(`${key}:"${value}"`);
-      }
-      let strArr = "";
-      arr.forEach((key) => {
-        strArr = strArr + key;
-      });
-
-      return `, filter: {${strArr}}`;
-    } else {
-      return "";
-    }
-  };
-
-  const GET_CHARACTERS = gql`
-    query {
-        characters (page: ${page}${filterGet()}) {
-        info {
-          pages,
-          next,   
-          prev
-        },
-        results {
-          id
-          name
-          status
-          species
-          gender
-          type
-          image
-          location {
-            name
-          }
-          episode {
-            name
-          }
-        }
-      }
-    }
-  `;
   let paginationLink = window.location.href.split("main/");
 
   const incPage = () => {
@@ -97,12 +45,12 @@ function Main() {
     navigate(res);
   };
 
-  const { loading, error, data } = useQuery(GET_CHARACTERS);
+  const { loading, error, data } = useQuery(allCharacters);
 
   return (
     <div className="App">
       <Header />
-      <Filter changeFilter={changeFilter} />
+      <Filter setFilterObj={setFilterObj} filterObj={filterObj} />
       {data && (
         <div className="pagination">
           <img src={leftArrow} onClick={decrPage} alt="ups"></img>

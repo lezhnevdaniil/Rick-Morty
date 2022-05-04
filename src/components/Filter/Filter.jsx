@@ -1,9 +1,22 @@
 import React from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { filterList, list } from "./FilterParams";
 import "./Filter.scss";
-import { useSearchParams } from "react-router-dom";
 
-function Filter({ changeFilter }) {
+function Filter({ setFilterObj, filterObj }) {
+  const navigate = useNavigate();
+
+  const changeFilter = (typeDetails, types) => {
+    if (types !== "Without a filter") {
+      setFilterObj((obj) => ({ ...obj, [typeDetails]: types }));
+      navigate(`/main/1`);
+    } else {
+      let newFilter = JSON.parse(JSON.stringify(filterObj));
+      delete newFilter[typeDetails];
+      setFilterObj(newFilter);
+      navigate(`/main/1`);
+    }
+  };
   const [optionParam] = useSearchParams();
   return (
     <form>
