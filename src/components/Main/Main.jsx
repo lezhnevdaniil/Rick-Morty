@@ -43,6 +43,7 @@ function Main() {
       arr.forEach((key) => {
         strArr = strArr + key;
       });
+
       return `, filter: {${strArr}}`;
     } else {
       return "";
@@ -76,6 +77,7 @@ function Main() {
     }
   `;
   let paginationLink = window.location.href.split("main/");
+
   const incPage = () => {
     let newArr = paginationLink[1].split("?");
     newArr[0] = String(Number(newArr[0]) + 1);
