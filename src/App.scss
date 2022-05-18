@@ -1,0 +1,37 @@
+@import url("https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap");
+
+* {
+  font-family: "Indie-Flower";
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 18px;
+    background-color: #88af88;
+
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: #24489b;
+    }
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgb(46, 126, 50);
+  }
+}
+.App {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  background-color: rgb(25, 31, 38);
+  flex-direction: column;
+  min-height: 100vh;
+
+  .nowPage {
+    background-color: rgb(0, 141, 83);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0 10px;
+  }
+}

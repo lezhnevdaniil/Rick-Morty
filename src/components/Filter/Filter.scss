@@ -1,0 +1,44 @@
+form {
+  width: 90vw;
+  height: 10vh;
+  border-radius: 22px;
+  background: linear-gradient(
+    284deg,
+    rgb(181, 209, 116) 0%,
+    rgb(105, 162, 56) 29%,
+    rgb(97, 158, 58) 40%,
+    rgb(76, 148, 62) 62%,
+    rgb(58, 126, 61) 72%,
+    rgb(3, 56, 56) 100%
+  );
+  background-size: 200% 200%;
+  animation: backgroundAnime 7s ease infinite alternate;
+  display: flex;
+  align-items: center;
+
+  .filter {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    justify-content: space-evenly;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 15vw;
+      height: 80px;
+      justify-content: space-around;
+      font-size: 25px;
+
+      select {
+        width: 100%;
+        height: 40px;
+        border-radius: 10px;
+        font-size: 22px;
+        background: rgb(195 207 106);
+        text-align: center;
+      }
+    }
+  }
+}

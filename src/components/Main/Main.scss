@@ -1,0 +1,29 @@
+.App-div {
+  width: 90vw;
+  height: auto;
+  border-radius: 22px;
+  background: linear-gradient(
+    284deg,
+    rgba(181, 209, 116, 1) 0%,
+    rgba(105, 162, 56, 1) 29%,
+    rgba(97, 158, 58, 1) 40%,
+    rgba(76, 148, 62, 1) 62%,
+    rgba(58, 126, 61, 1) 72%,
+    rgba(3, 56, 56, 1) 100%
+  );
+  background-size: 200% 200%;
+  animation: backgroundAnime 7s ease infinite alternate;
+  margin-bottom: 20px;
+}
+
+@keyframes backgroundAnime {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 50% 0%;
+  }
+}
